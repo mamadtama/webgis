@@ -1,0 +1,172 @@
+    <title>Dong-A University</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta id="resResponsiveViewport" name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="About us, Academics, Global Network, Admission, Korean Language Program, Campus Guide">
+<meta name="keywords" content="dong-a, university, graduate school">
+<script src="/js/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highcharts/5.0.6/css/highcharts.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/5.0.6/js/highstock.js"></script>
+  <script src="javascripts/da/jquery-1.9.1.min.js.download"></script>
+  <script src="javascripts/da/jquery-migrate-1.2.1.js.download"></script>
+  <script src="javascripts/da/jquery-ui-1.11.0.js.download"></script>
+  <script src="javascripts/da/jquery.simplemodal-1.4.4.js.download"></script>
+  
+  <script src="javascripts/da/jquery.blockUI.js.download"></script>
+  <script>
+    var defaultTextSiteId = "english";
+  </script>
+  <script src="javascripts/da/common.js.download"></script>
+  <script src="javascripts/da/modernizr.min.js.download"></script>
+  <script src="javascripts/da/jquery.mCustomScrollbar.js.download"></script><script src="/stylesheets/da/jquery.mousewheel.min.js.download"></script>
+  <script src="javascripts/da/jquery.jshowoff.js.download"></script>
+  <script src="javascripts/da/jquery.bxslider.js.download"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
+  <style type="text/css">
+    a:hover {
+  background-color: red;
+
+  /* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+}
+  </style>
+  <link rel="stylesheet" href="/stylesheets/da/mCustomScrollbar.css">  
+  <script src="/javascripts/da/common.js(1).download"></script>
+  <script src="/javascripts/da/site_user.js.download"></script>
+   <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel="stylesheet" href="/stylesheets/da/blockUI.css">
+  <link rel="stylesheet" href="/stylesheets/da/normalize.css">
+  <link rel="stylesheet" href="/stylesheets/da/common.css">
+  <link rel="stylesheet" href="/stylesheets/da/content.css">
+      <link rel="stylesheet" href="/stylesheets/da/style.css">
+  <link rel="stylesheet" href="/stylesheets/da/responsive.css">
+      <!-- PC + TABLET + MOBILE -->
+      <link media="only screen and (max-width: 420px)" href="/stylesheets/da/responsiveMobile.css" rel="stylesheet">
+      <link media="only screen and (min-width: 421px) and (max-width: 860px)" href="/stylesheets/da/responsiveTablet.css" rel="stylesheet">
+      <link media="only screen and (min-width: 861px)" href="/stylesheets/da/responsiveDesktop.css" rel="stylesheet">
+  <link href="/stylesheets/da/master.css" rel="stylesheet">
+      <!-- PC + TABLET + MOBILE -->
+      <link media="only screen and (max-width: 420px)" href="/stylesheets/da/master_mobile.css" rel="stylesheet">
+      <link media="only screen and (min-width: 421px) and (max-width: 860px)" href="/stylesheets/da/master_tablet.css" rel="stylesheet">
+      <link media="only screen and (min-width: 861px)" href="/stylesheets/da/master_desktop.css" rel="stylesheet">
+      <!-- PC + TABLET + MOBILE -->
+      <link media="only screen and (max-width: 420px)" href="/stylesheets/da/site_contents_Mobile.css" rel="stylesheet">
+      <link media="only screen and (min-width: 421px) and (max-width: 860px)" href="/stylesheets/da/site_contents_Tablet.css" rel="stylesheet">
+      <link media="only screen and (min-width: 861px)" href="/stylesheets/da/site_contents_Desktop.css" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheets/da/fnct.css">
+      <!-- PC + TABLET + MOBILE -->
+      <link media="only screen and (max-width: 420px)" href="/stylesheets/da/fnctMobile.css" rel="stylesheet">
+      <link media="only screen and (min-width: 421px) and (max-width: 860px)" href="/stylesheets/da/fnctTablet.css" rel="stylesheet">
+      <link media="only screen and (min-width: 861px)" href="/stylesheets/da/fnctDesktop.css" rel="stylesheet">
+    
+      <!-- PC + TABLET + MOBILE -->
+      <script>
+        function adjustStyle(width) {
+          var isMobile = true;
+          var isTablet = true;
+          var $w7viewPort = $("#resResponsiveViewport");
+          width = parseInt(width);
+          if ( isMobile && (width < 420)) {/*mobile*/
+            $("._responsiveObj").removeClass("Desktop");
+            $("._responsiveObj").removeClass("Tablet");
+            $("._responsiveObj").addClass("Mobile");
+            $w7viewPort.attr("content", "width=420, user-scalable=no");
+            $("body").css("zoom","1");
+          } else if ( isTablet && ((width >= 421) && (width <= 860)) ) {/*Tablet*/
+            $("._responsiveObj").removeClass("Desktop");
+            $("._responsiveObj").addClass("Tablet");
+            $("._responsiveObj").removeClass("Mobile");
+            $w7viewPort.attr("content", "width=860, user-scalable=no");
+            $("body").css("zoom","1");
+          } else if ((width > 861)) {/*Desktop*/
+            $("._responsiveObj").addClass("Desktop");
+            $("._responsiveObj").removeClass("Tablet");
+            $("._responsiveObj").removeClass("Mobile");
+            $w7viewPort.attr("content", "width=device-width, initial-scale=1");
+            $("body").removeAttr("style");
+          }
+        }
+      </script>
+  <script>
+  
+  $(function() {
+    if( typeof(window["adjustStyle"]) == "function" ){
+      adjustStyle($(this).width());
+      
+      $(window).resize(function() {
+        adjustStyle($(this).width());
+      });
+    }else{
+      $("._responsiveObj").addClass("Desktop");
+    }
+  });
+  </script> 
+<link type="text/css" rel="stylesheet" href="/stylesheets/da/style(1).css">
+<script>
+var zoomLevel = 1;
+function jf_zoomScrin(zoomVal) {
+  if( zoomVal == 0 ) {
+    zoomLevel = 1;
+  } else {
+    zoomLevel += zoomVal; 
+  }
+  
+  $( "body" ).css( { "zoom":zoomLevel, "-moz-transform":"scale(" + zoomLevel + ")" } );
+}
+
+function jf_quickPrint() {
+  window.print();
+}
+</script>
+        <!-- PC + TABLET + MOBILE -->
+          <link media="only screen and (max-width: 420px)" href="/stylesheets/da/style_main_Mobile.css" rel="stylesheet">
+          <link media="only screen and (min-width: 421px) and (max-width: 860px)" href="/stylesheets/da/style_main_Tablet.css" rel="stylesheet">
+          <link media="only screen and (min-width: 861px)" href="/stylesheets/da/style_main_Desktop.css" rel="stylesheet">
+        
+   <link href="/stylesheets/da/style(2).css" rel="stylesheet">   
+      <!-- PC + TABLET + MOBILE -->
+      <link media="only screen and (max-width: 420px)" href="/stylesheets/da/style_common_Mobile.css" rel="stylesheet">
+      <link media="only screen and (min-width: 421px) and (max-width: 860px)" href="/stylesheets/da/style_common_Tablet.css" rel="stylesheet">
+      <link media="only screen and (min-width: 861px)" href="/stylesheets/da/style_common_Desktop.css" rel="stylesheet">
+  
+  <script src="/stylesheets/da/script.js.download"></script> 
+  <script src="/stylesheets/da/script.js(1).download"></script>
+
+  </head>

@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Wind Field</title>
+    <link href="../../Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="./js/config.js"></script>
+    <script src="./js/jquery.min.js"></script>
+    <link href="./css/pretty.css" rel="stylesheet">
+    <script src="./js/spectrum.js"></script>
+    <script type="text/javascript" src="http://www.supermapol.com/earth/vue-iEarth/static/Cesium/Cesium.js"></script> 
+    <!--<script type="text/javascript" src="/Build/Cesium/Cesium.js"></script> -->
+    <script src="/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+
+<!--<link rel="stylesheet" href="/css/style.css" type="text/css"> -->
+
+<link href="/css/css2" rel="stylesheet">
+<link id="clayCSSTheme" rel="stylesheet" href="/css/atlas.css"> 
+<link href="/css/bootstrap.css" rel="stylesheet">
+
+</head>
+<body>
+<div id="cesiumContainer"></div>
+<div style="position: absolute;left: 3em;z-index: 999;display: block;top:2em;">
+    <div class="d-flex">
+        <div class="my-auto" style="z-index: 2;">
+        <img src="/img/logo2.png" class="img-fluid my-auto logo" style="width: 15%">
+        <br>
+        <img src="/img/logo-d-soc_2.png" height="50%" class="img-fluid my-auto logo" style="background-color: #FFFFFF;width: 15%">
+
+        </div>
+    </div>
+
+</div>
+
+<div id="toolbar" class="tool-bar param-container">
+    <div class="param-item">
+        <label class="tool-label">particle Size: </label>
+        <input type="range" id="particleSize" min="1" max="10" value="1.2" step="1" style="width: 170px">
+    </div>
+    <div class="param-item">
+        <label class="tool-label">particle Life: </label>
+        <input type="range" id="particleLife" min="1" max="20" value="5" step="1" style="width: 170px">
+    </div>
+    <div class="param-item">
+        <label class="tool-label">particle Density: </label>
+        <input type="range" id="particleDensity" min="0.1" max="3" value="1" step="0.1" style="width: 170px">
+    </div>
+    <div class="param-item">
+        <label class="tool-label">particle Velocity Scale: </label>
+        <input type="range" id="particleVelocityScale" min="0.1" max="5" value="0.4" step="0.1" style="width: 170px">
+    </div>
+    <div class="param-item">
+        <label class="tool-label">field Layer Visible </label>
+        <input type="checkbox" id="fieldLayerVisible" checked=true>
+    </div>
+    <div class="param-item">
+        <label class="tool-label">show</label>
+        <input type="checkbox" id="show" checked>
+    </div>
+    <div class="param-item">
+        <label class="tool-label">threshold: </label>
+        <input type="range" id="threshold" min="0" max="1" value="0.5" step="0.1" style="width: 170px">
+    </div>
+    <div class="param-item">
+        <label class="tool-label">bloom Intensity: </label>
+        <input type="range" id="bloomIntensity" min="0" max="10" value="2" step="0.1" style="width: 170px">
+    </div>
+    <div class="param-item">
+        <button type="button" id="startField" class="button black">Start</button>
+        <button type="button" id="changeFieldData" class="button black" style="margin-left: 49px;">change Field Data</button>
+    </div>
+</div>
+
+<div id="toolbar" class="tool-bar-typhoon param-container">
+    <div class="form-group">
+      <label class="toggle-switch"><span id="typhoon-menu">LAST TYPHOON TO BUSAN</span> <br>
+        <input class="toggle-switch-check" type="checkbox" name="current-typhoon-check" onclick="addCurrentTyphoon();"/>
+        <!--<span class="toggle-switch-label">Toggle Switch with data-label on and data-label-off</span> -->
+        <span aria-hidden="true" class="toggle-switch-bar">
+          <span class="toggle-switch-handle" data-label-off="Point off" data-label-on="Point On">
+            <span class="button-icon button-icon-on toggle-switch-icon">
+              <svg class="lexicon-icon lexicon-icon-product-menu-open" focusable="false" role="presentation">
+                <!--<use href="/images/icons/icons.svg#product-menu-open" /> -->
+              </svg>
+            </span>
+            <span class="button-icon button-icon-off toggle-switch-icon">
+              <svg class="lexicon-icon lexicon-icon-product-menu-closed" focusable="false" role="presentation">
+                <!--<use href="/images/icons/icons.svg#product-menu-closed" /> -->
+              </svg>
+            </span>
+          </span>
+        </span>
+      </label>
+      <label class="toggle-switch">
+        <input class="toggle-switch-check" type="checkbox" name="current-typhoon-line-check" onclick="addCurrentTyphoonLine();"/>
+        <!--<span class="toggle-switch-label">Toggle Switch with data-label on and data-label-off</span> -->
+        <span aria-hidden="true" class="toggle-switch-bar">
+          <span class="toggle-switch-handle" data-label-off="Line Off" data-label-on="Line On">
+            <span class="button-icon button-icon-on toggle-switch-icon">
+              <svg class="lexicon-icon lexicon-icon-product-menu-open" focusable="false" role="presentation">
+               <!-- <use href="/images/icons/icons.svg#product-menu-open" /> -->
+              </svg>
+            </span>
+            <span class="button-icon button-icon-off toggle-switch-icon">
+              <svg class="lexicon-icon lexicon-icon-product-menu-closed" focusable="false" role="presentation">
+                <!--<use href="/images/icons/icons.svg#product-menu-closed" /> -->
+              </svg>
+            </span>
+          </span>
+        </span>
+      </label>
+      <br>
+      <label class="toggle-switch"> <span id="typhoon-menu">BUSAN DIRECT TYPHOON</span><br>
+        <input class="toggle-switch-check" type="checkbox" name="dir-busan-typhoon-check" onclick="addBusanDirectTyphoon();"/>
+        <!--<span class="toggle-switch-label">Toggle Switch with data-label on and data-label-off</span> -->
+        <span aria-hidden="true" class="toggle-switch-bar">
+          <span class="toggle-switch-handle" data-label-off="Point Off" data-label-on="Point On">
+            <span class="button-icon button-icon-on toggle-switch-icon">
+              <svg class="lexicon-icon lexicon-icon-product-menu-open" focusable="false" role="presentation">
+                <!--<use href="/images/icons/icons.svg#product-menu-open" /> -->
+              </svg>
+            </span>
+            <span class="button-icon button-icon-off toggle-switch-icon">
+              <svg class="lexicon-icon lexicon-icon-product-menu-closed" focusable="false" role="presentation">
+                <!--<use href="/images/icons/icons.svg#product-menu-closed" /> -->
+              </svg>s
+            </span>
+          </span>
+        </span>
+      </label>
+      <label class="toggle-switch">
+        <input class="toggle-switch-check" type="checkbox" name="dir-typhoon-line-check" onclick="addBusanDirectTyphoonLine();"/>
+        <!--<span class="toggle-switch-label">Toggle Switch with data-label on and data-label-off</span> -->
+        <span aria-hidden="true" class="toggle-switch-bar">
+          <span class="toggle-switch-handle" data-label-off=" Line Off" data-label-on="Line On">
+            <span class="button-icon button-icon-on toggle-switch-icon">
+              <svg class="lexicon-icon lexicon-icon-product-menu-open" focusable="false" role="presentation">
+                <!--<use href="/images/icons/icons.svg#product-menu-open" />-->
+              </svg>
+            </span>
+            <span class="button-icon button-icon-off toggle-switch-icon">
+              <svg class="lexicon-icon lexicon-icon-product-menu-closed" focusable="false" role="presentation">
+                <!--<use href="/images/icons/icons.svg#product-menu-closed" /> -->
+              </svg>
+            </span>
+          </span>
+        </span>
+      </label>
+      <br>
+      <label class="toggle-switch"><span id="typhoon-menu"> ALL BUSAN TYPHOON</span><br>
+        <input class="toggle-switch-check" type="checkbox" name="indir-busan-typhoon-check" onclick="addBusanIndirectTyphoon();"/>
+        <!--<span class="toggle-switch-label">Toggle Switch with data-label on and data-label-off</span> -->
+        <span aria-hidden="true" class="toggle-switch-bar">
+          <span class="toggle-switch-handle" data-label-off="Point Off" data-label-on="Point On">
+            <span class="button-icon button-icon-on toggle-switch-icon">
+              <svg class="lexicon-icon lexicon-icon-product-menu-open" focusable="false" role="presentation">
+                <use href="/images/icons/icons.svg#product-menu-open" />
+              </svg>
+            </span>
+            <span class="button-icon button-icon-off toggle-switch-icon">
+              <svg class="lexicon-icon lexicon-icon-product-menu-closed" focusable="false" role="presentation">
+                <use href="/images/icons/icons.svg#product-menu-closed" />
+              </svg>
+            </span>
+          </span>
+        </span>
+      </label>
+      <label class="toggle-switch">
+        <input class="toggle-switch-check" type="checkbox" name="indir-typhoon-line-check" onclick="addBusanIndirectTyphoonLine();"/>
+        <!--<span class="toggle-switch-label">Toggle Switch with data-label on and data-label-off</span> -->
+        <span aria-hidden="true" class="toggle-switch-bar">
+          <span class="toggle-switch-handle" data-label-off=" Line Off" data-label-on="Line On">
+            <span class="button-icon button-icon-on toggle-switch-icon">
+              <svg class="lexicon-icon lexicon-icon-product-menu-open" focusable="false" role="presentation">
+                <use href="/images/icons/icons.svg#product-menu-open" />
+              </svg>
+            </span>
+            <span class="button-icon button-icon-off toggle-switch-icon">
+              <svg class="lexicon-icon lexicon-icon-product-menu-closed" focusable="false" role="presentation">
+                <use href="/images/icons/icons.svg#product-menu-closed" />
+              </svg>
+            </span>
+          </span>
+        </span>
+      </label>
+    </div>
+    <div class="autocomplete w-100 mb-1" style="min-width: 150px;">
+            <input id="myInput" class="form-control form-control-sm font-small text-end rounded-0" type="text" placeholder="Searching for typhoon" onfocus="this.value=&#39;&#39;" name="location" autocomplete="off" style="background-color: rgba(255,255,255,.2);color:white;border:1px solid rgba(255,255,255,.1);">
+        </div>
+        <div class="param-item">
+            <button type="button" id="startField" class="button black" onclick="CurTrackPrediction();">Current Prediction</button> <br>
+            <button type="button" id="changeFieldData" class="button black" onclick="TrackSimulation();">Track Prediction Simulation</button>
+        </div>
+
+</div>
+
+</div>
+
+<div class="modal fade" id="option-simulation-modal" tabindex="-1" aria-hidden="true">
+  <div class="typhoon-modal modal-dialog modal-lg">
+        <div class="modal-content" style="background-color:rgba(0,0,0,.75);">
+            <div class="modal-header">
+                <div class="d-flex" style="opacity: 0.8;">
+                    <h1 id="country-name-modal" class="ms-2 my-auto text-uppercase text-white">Choose the sample:</h1>
+                </div>  
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body px-0">
+              <div class="container-fluid">
+                  <div class="row mx-0">
+                      <div class="col mx-0">
+                          <div class="my-1 text-white">
+                              <div class="d-flex justify-content-between my-1">
+                                  <div class="d-flex" id='sampleoption'>
+                                      <!--
+                                      <div class="radio-typhoon">
+                                          <ul>
+                                          <li>
+                                            <input type="radio" id="f-option" name="typhoon-selector" value="Megi_2004">
+                                            <label for="f-option">Megi_2004</label>
+                                            <div class="check"></div>
+                                          </li>
+                                          <li>
+                                            <input type="radio" id="s-option" name="typhoon-selector" value="Jangmi_2020">
+                                            <label for="s-option">Jangmi_2020</label>
+                                            <div class="check"><div class="inside"></div></div>
+                                          </li>
+                                          <li>
+                                            <input type="radio" id="t-option" name="typhoon-selector" value="Dianmu_2010">
+                                            <label for="t-option">Dianmu_2010</label> 
+                                            <div class="check"><div class="inside"></div></div>
+                                          </li>
+                                          <li>
+                                            <input type="radio" id="k-option" name="typhoon-selector" value="Omais_2021">
+                                            <label for="k-option">Omais_2021</label> 
+                                            <div class="check"><div class="inside"></div></div>
+                                          </li>
+                                        </ul>
+                                    </div>-->
+
+                                  </div>
+                                  <div class="d-flex justify-content-end">
+                                    <button class="button-menu shadow bg-yellow" style="border:none;clip-path: polygon(0 0,85% 0,100% 50%,85% 100%,0 100%,15% 50%);" onclick="ProcessSimulation();">
+                                        <p class="my-auto pe-1 text-dark fw-bold font-big text-end text-uppercase" style="border-right: 3px solid rgba(255, 255, 255 ,1);">See <br>the result</p>
+                                    </button>
+                                </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+        </div>
+  </div>
+</div>
+
+<script>
+    function onload(Cesium) {
+        var viewer = new Cesium.Viewer('cesiumContainer', {
+            contextOptions: {
+                requestWebgl2: true
+            },
+            infobox: false,
+            skyAtmosphere: false
+        });
+        viewer.imageryLayers.addImageryProvider(new Cesium.SingleTileImageryProvider({
+            url: './images/BlackMarble_2020.jpg'
+        }));
+        var scene = viewer.scene;
+        scene.skyBox.show = false;
+        //scene.skyBox.show = false;
+        scene.sun.show = true;
+        scene.bloomEffect.show = true; 
+        scene.bloomEffect.threshold = $("#threshold").val();
+        scene.bloomEffect.bloomIntensity = $("#bloomIntensity").val();
+
+        var promise = scene.open(URL_CONFIG.SCP_WORLD_COUNTRY_VECTOR2);
+        Cesium.when.all(promise, function (layers) {
+            var layer1 = scene.layers.find("Country_Label@World");
+            var layerEffect1 = layer1.effect;
+            layerEffect1.setValue('Color', new Cesium.Color(255 * 1.5 / 255, 255 * 1.5 / 255, 255 * 1.5 / 255, 1));
+            layerEffect1.setValue('Width', 1.3);
+
+            var layer3 = scene.layers.find("Ocean_Label@World");
+            var layerEffect3 = layer3.effect;
+            layerEffect3.setValue('Color', new Cesium.Color(255 * 1.5 / 255, 255 * 1.5 / 255, 255 * 1.5 / 255, 1));
+            layerEffect3.setValue('Width', 1.3);
+        });
+        
+        var colorTable = new Cesium.ColorTable();
+        colorTable.insert(2, new Cesium.Color(254 / 255, 224 / 255, 139 / 255, 0.95));
+        colorTable.insert(2, new Cesium.Color(171 / 255, 221 / 255, 164 / 255, 0.95));
+        colorTable.insert(2, new Cesium.Color(104 / 255, 196 / 255, 160 / 255, 0.95));
+        colorTable.insert(4, new Cesium.Color(44 / 255, 185 / 255, 156 / 255, 0.95));
+        colorTable.insert(4, new Cesium.Color(25 / 255, 169 / 255, 178 / 255, 0.95));
+        colorTable.insert(7, new Cesium.Color(50 / 255, 136 / 255, 189 / 255, 0.95));
+        colorTable.insert(10, new Cesium.Color(31 / 255, 110 / 255, 183 / 255, 0.95));
+        colorTable.insert(15, new Cesium.Color(5 / 255, 98 / 255, 184 / 255, 0.95));
+        var fieldLayer = new Cesium.FieldLayer3D(scene.context); //Field data layer
+        fieldLayer.particleVelocityFieldEffect.velocityScale = 0.4 * 100.0; //initialization effect
+        fieldLayer.particleVelocityFieldEffect.particleSize = 1.2;
+        fieldLayer.particleVelocityFieldEffect.paricleCountPerDegree = 1.0;
+        // fieldLayer.particleVelocityFieldEffect._fade0pacity=0.996;
+        scene.primitives.add(fieldLayer); //Add a field layer
+        var particleWindField = [];
+        var particleWindInverseField = [];
+        var dataChanged = false;
+
+        fieldLayer.particleVelocityFieldEffect.colorTable = colorTable;
+
+        //Load wind farm data
+        
+        $.ajax({
+            url: './data/winds.json',
+            success: function (data) {
+                var p = 0;
+                for (var j = 0; j < data.ny; j++) {
+                    particleWindField[j] = [];
+                    particleWindInverseField[j] = [];
+                    for (var i = 0; i < data.nx; i++, p++) {
+                        particleWindField[j][i] = data.data[p];
+                        particleWindInverseField[j][i] = [-data.data[p][0], -data.data[p][1]];
+                    }
+                }
+                $('#toolbar').show();
+                $('#loadingbar').remove();
+                document.getElementById("startField").onclick = function () {
+                    fieldLayer.fieldData = particleWindField;
+                };
+            }
+        });
+        
+        // Show typhoon track as points
+        /*
+        var dataSource1 = new Cesium.GeoJsonDataSource();
+        var roads = dataSource1.load('/data/20200828-MAYSAK.json');
+        roads.then(function(dataSource1) {
+            viewer.dataSources.add(dataSource1);
+            viewer.zoomTo(dataSource1);
+
+            //Get the array of entities
+            var entities = dataSource1.entities.values;
+
+            var colorHash = {};
+            for (var i = 0; i < entities.length; i++) {
+                var entity = entities[i];
+                entity.billboard = undefined;
+                entity.point = new Cesium.PointGraphics({
+                    //color: Cesium.Color.fromRandom(),
+                    color: Cesium.Color.GOLD,
+                    pixelSize: 10
+                });
+            }
+
+        }).otherwise(function(error){
+            //Display any errrors encountered while loading.
+            //window.alert(error);
+        });*/
+
+
+        /*
+        var promise = Cesium.GeoJsonDataSource.load('/data/aaline_namtheun_2016.json', {
+            clampToGround : false,
+            //extrudedHeight : 300.0,
+            width : 10.0,
+            cornerType: Cesium.CornerType.MITERED,
+            material : Cesium.Color.GREEN
+        }); */       
+
+        /*
+        var geocurtyphoon = function geolinec(){
+          var tmp=null;
+          $.ajax({           
+              type: "GET",
+              async: false,
+              dataType: "json",
+              url: "/typhoon_line",
+              success: function (data) {
+                tmp=data;
+                console.log(tmp);
+              }
+            })
+          return tmp;
+        }();
+        
+        */ 
+
+
+
+        /*
+        var promise1 = Cesium.GeoJsonDataSource.load('/data/aaline_namtheun_2016.json', {
+            stroke: Cesium.Color.BLACK.withAlpha(0.5),
+            fill: Cesium.Color.BLACK.withAlpha(0.5),
+            strokeWidth: 3
+        }); */
+        
+        //console.log(geocurtyphoon);
+
+
+        /*
+        geocurtyphoon.then(function(dataSource) {
+            viewer.dataSources.add(dataSource);
+            var entities = dataSource.entities.values;
+            for (var i = 0; i < entities.length; i++) {
+                var entity = entities[i];
+               // if (defined(entity.polyline)) {
+                    // Get a bounding sphere that contains all polyline positions and get the center
+                    var positions = entity.polyline.positions.getValue(viewer.clock.currentTime);
+                    var boundingSphere = Cesium.BoundingSphere.fromPoints(positions);
+                    var origin = boundingSphere.center;
+                    viewer.entities.add({
+                        position : origin,
+                        label : {
+                            text : entity.name
+                        },
+                        font : '14pt monospace',
+                        style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+                        outlineWidth : 3,
+                        // Other styling options
+                    });
+               // }
+            }
+        });   
+
+        */ 
+
+
+
+        $("#show").on("input change", function () {
+            viewer.scene.bloomEffect.show = this.checked;
+        });
+
+        //Flood brightness threshold adjustment
+        $("#threshold").on("input change", function () {
+            viewer.scene.bloomEffect.threshold = this.value;
+        });
+
+        //Flood intensity
+        $("#bloomIntensity").on("input change", function () {
+            $("#current_bloomIntensity").text(this.value);
+            viewer.scene.bloomEffect.bloomIntensity = this.value;
+        });
+
+        //Visibility of the field layer
+        $("#fieldLayerVisible").on("input change", function () {
+            fieldLayer.visible = this.checked;
+        });
+
+        //Field Layer Data Toggle
+        $("#changeFieldData").on("click", function () {
+            if (dataChanged) {
+                fieldLayer.fieldData = particleWindField;
+            } else {
+                fieldLayer.fieldData = particleWindInverseField;
+            }
+            dataChanged = !dataChanged;
+        });
+
+        //particle size control
+        $("#particleSize").on("input change", function () {
+            fieldLayer.particleVelocityFieldEffect.particleSize = this.value;
+        });
+
+        //particle life cycle
+        $("#particleLife").on("input change", function () {
+            var lifeRange = [this.value * 1000.0, this.value * 1000.0 + 5000.0];
+            fieldLayer.particleVelocityFieldEffect.particleLifeRange = lifeRange;
+        });
+
+        //particle density
+        $("#particleDensity").on("input change", function () {
+            fieldLayer.particleVelocityFieldEffect.paricleCountPerDegree = this.value;
+        });
+
+        //particle velocity
+        $("#particleVelocityScale").on("input change", function () {
+            fieldLayer.particleVelocityFieldEffect.velocityScale = this.value * 100.0;
+        });
+    }
+	if (typeof Cesium !== 'undefined') {
+        window.startupCalled = true;
+        onload(Cesium);
+    }
+</script>
+<!--
+<script src="/js/dashboard2.js"></script>
+-->
+</body>
+</html>
